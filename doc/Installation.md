@@ -83,7 +83,7 @@ server {
 sudo ln -s /etc/nginx/sites-available/codeproject /etc/nginx/sites-enabled/
 sudo systemctl restart nginx
 
-sudo ufw deny 32168
+sudo ufw allow 32168
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
 ```
