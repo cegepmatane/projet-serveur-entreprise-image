@@ -1,9 +1,24 @@
 # Installation
 Documentation des étapes pour l'installation, la configuration et le lancement des bases du projet.
 
+
+
 ## Prérequis 
 - Serveur Ubuntu 24.04lts  
 - Sécurisation du serveur : [Documentation Sécurisation](https://docs.google.com/presentation/d/1PU63Hrt2aySgctg5CeqcCKHfleh34lCsptgdP1UKmCU/edit?slide=id.g124275a85d6_0_138#slide=id.g124275a85d6_0_138)    
+
+
+
+## Sécurisation et activation des ports requis
+```bash
+sudo ufw allow 22/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 32168/tcp
+
+sudo ufw enable
+```
+
 
 
 ## Installation .NET 9 
@@ -18,6 +33,7 @@ S'il y a des erreurs, effectuer les commandes suivantes :
 sudo apt-get install -y aspnetcore-runtime-9.0
 sudo apt-get install -y dotnet-runtime-9.0
 ```
+
 
 
 ## Installation *CodeProject.AI-Server*  
@@ -37,6 +53,7 @@ pushd "/usr/bin/codeproject.ai-server-2.9.5/server" && bash ../setup.sh && popd
 ```
 
 
+
 ## Lancement et test du service  
 - Lancement du service :  
 ```bash
@@ -45,36 +62,54 @@ sudo systemctl enable codeproject.ai-server
 ```  
 
 Teste à effectuer dans le serveur, devrait retourner du html :  
-```curl http://localhost:32168```  
+```bash
+curl http://localhost:32168
+```  
+tester la page sur un navigateur : http://172.105.26.249:32168
 
-Modification permission du port du serveur pour effectuer le test dans un browser : 
-`sudo ufw allow 32168/tcp`
 
 
 ## Sécurisation du service avec un Reverse Proxy :  
+Entrer un user et un mot de passe.
 ```bash
 sudo apt install nginx apache2-utils
-
-sudo htpasswd -c /etc/nginx/.htpasswd { yourusername }
+sudo htpasswd -c /etc/nginx/.htpasswd <yourusername>
 ```
-Entrer un user et un mot de passe.
 
 ```bash
 sudo rm /etc/nginx/sites-enabled/default
-
-sudo nano /etc/nginx/sites-available/codeproject
-```  
+sudo nano /etc/nginx/sites-available/codeproject 
+```
 
 Création d'une config, s'assurer que le contenu du fichier `codeproject` est commme suit : 
 ```
 server {
     listen 80;
+    server_name 172.105.26.249;
 
+    client_max_body_size 20M;
+
+    # 1 - Public site (no auth)
     location / {
-        proxy_pass http://127.0.0.1:32168;
+        root /var/www/html;
+        index index.html;
+    }
 
-        auth_basic "Restricted Access";
+    # 2 - Protected app
+    location /codeproject/ {
+        auth_basic "Restricted Access to the Cream";
         auth_basic_user_file /etc/nginx/.htpasswd;
+
+        proxy_pass http://127.0.0.1:32168/;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_connect_timeout 300s;
+        proxy_send_timeout 300s;
+        proxy_read_timeout 300s;
     }
 }
 ```
@@ -82,8 +117,43 @@ server {
 ```bash
 sudo ln -s /etc/nginx/sites-available/codeproject /etc/nginx/sites-enabled/
 sudo systemctl restart nginx
+```
 
-sudo ufw allow 32168
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
+
+
+### Html envoyer au serveur pour scanner
+* Il se peut qu'on doit ouvrir le dashboard de codeproject.ai pour scanner
+
+Page d'upload sur http://172.105.26.249
+`cd /var/www/html/index.html`
+
+```html
+<html>
+    <body>
+    Detect the scene in this file: <input id="image" type="file" />
+    <input type="button" value="Detect Scene" onclick="detectScene(image)" />
+
+    <script>
+    function detectScene(fileChooser) {
+        var formData = new FormData();
+        formData.append('image', fileChooser.files[0]);
+
+        fetch('http://172.105.26.249/codeproject/v1/vision/detection', {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            const pred = data.predictions?.[0];
+
+            if (pred) {
+                console.log(pred.label, pred.confidence);
+            }
+        });
+    }
+    </script>
+    </body>
+</html>
 ```
