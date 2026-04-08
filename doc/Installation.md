@@ -3,7 +3,7 @@ Documentation des étapes pour l'installation, la configuration et le lancement 
 
 
 
-## Prérequis 
+### Prérequis 
 - Serveur Ubuntu 24.04lts  
 - Sécurisation du serveur : [Documentation Sécurisation](https://docs.google.com/presentation/d/1PU63Hrt2aySgctg5CeqcCKHfleh34lCsptgdP1UKmCU/edit?slide=id.g124275a85d6_0_138#slide=id.g124275a85d6_0_138)    
 
@@ -42,6 +42,7 @@ sudo apt-get install -y dotnet-runtime-9.0
 
 - Installation du .deb :  
 ```bash
+sudo apt install unzip
 unzip codeproject.ai-server_2.9.5_Ubuntu_x64.zip
 ls
 
@@ -65,7 +66,7 @@ Teste à effectuer dans le serveur, devrait retourner du html :
 ```bash
 curl http://localhost:32168
 ```  
-tester la page sur un navigateur : http://172.105.26.249:32168
+tester la page sur un navigateur : http://<*votre address ip*>:32168
 
 
 
@@ -121,12 +122,10 @@ sudo systemctl restart nginx
 
 
 
-### Html envoyer au serveur pour scanner
-* Il se peut qu'on doit ouvrir le dashboard de codeproject.ai pour scanner
+## Création du site html pour l'analyse d'image
 
-Page d'upload sur http://172.105.26.249
-`cd /var/www/html/index.html`
-
+Créer le fichier Html suivant sur le serveur, http://<*votre address ip*>  
+`nano /var/www/html/index.html` :  
 ```html
 <html>
     <body>
@@ -138,7 +137,7 @@ Page d'upload sur http://172.105.26.249
         var formData = new FormData();
         formData.append('image', fileChooser.files[0]);
 
-        fetch('http://172.105.26.249/codeproject/v1/vision/detection', {
+        fetch('http://<votre address ip>/codeproject/v1/vision/detection', {
             method: "POST",
             body: formData
         })
@@ -157,3 +156,42 @@ Page d'upload sur http://172.105.26.249
     </body>
 </html>
 ```
+
+Puis, modifier les permissions :  
+```bash
+sudo chown -R <username>:www-data /var/www/html
+```
+
+
+<!-- ## Dernière configuration avant l'analyse de l'image test  
+### Configuration des modules de CodeProject.AI :
+Dans le panel CodeProject.AI `http://<votre address ip>:32168/`, désinstaller tous les modules existantes, excepté `Object Detection (YOLOv5 6.2)` :  
+![images-panel.png](./images/module-pannel.png)  
+S'assurer de garder :   
+![module-to-keep.png](./images/module-to-keep.png)  
+
+### Configuration du VPS Linode
+Maintenant, pour pouvoir upload l'image suivante à analyser par le service : 
+[Image de test, une image de chaise](./images/test-chair.jpg)  
+
+Il faut 'rezise' le linode pour le convertir en Linode 4Gb temporairement : 
+![rezise-section.png](./images/rezise-section.png)  
+
+En s'assurant de sélectionne l'option `Warm resize` :  
+![linode-4gb.png](./images/linode-4gb.png)  
+![warm-resize.png](./images/warm-resize.png)  
+
+L'option `Warm resize` va augmenter les ressources de votre serveur Linode (CPU et RAM) temporairement. Cela signifie que Linode vas migrer les données en arrière plan avec les resources spécifiées temperairement. Pour revenir au plan initial, vous devez vous reconnecter en SSH et entrer la commande `sudo reboot`, lequel vas redémarrer le VPS à sont plan initial. Ce processus prends un certain temps, environ 5 à 7 minutes.  
+
+
+> **_NOTE:_**  Linode utilise une facturation à l'heure. Si vous augmentez la puissance de votre VPS pour une heure seulement, vous ne paierez le tarif du plan supérieur que pour cette heure précise, donc ce cas-ci, 0.036$ pour l'heure.  !! IL FAUT DONC S'ASSURER DE RESIZE LE SERVER AU PLAN 1GB À LA FIN DE L`ATELIER POUR ÉVITER DES COÛT SUPPLÉMENTAIRE. !!
+
+Attendre que Linode resize le VPS :  
+![reboot-for-resize.png](./images/reboot-for-resize.png)
+
+Cela indique dans la pannel Linode que le server est offline, c'est normal, c'est celui d'arrière plan qui fonctionne actuellement :  
+![./images/rezising.png](./images/rezising.png)
+
+
+### Résultat attendue : 
+![./images/success.png](./images/success.png) -->
