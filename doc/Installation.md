@@ -163,7 +163,7 @@ sudo chown -R <username>:www-data /var/www/html
 ```
 
 
-<!-- ## Dernière configuration avant l'analyse de l'image test  
+## Dernière configuration avant l'analyse de l'image test  
 ### Configuration des modules de CodeProject.AI :
 Dans le panel CodeProject.AI `http://<votre address ip>:32168/`, désinstaller tous les modules existantes, excepté `Object Detection (YOLOv5 6.2)` :  
 ![images-panel.png](./images/module-pannel.png)  
@@ -174,24 +174,25 @@ S'assurer de garder :
 Maintenant, pour pouvoir upload l'image suivante à analyser par le service : 
 [Image de test, une image de chaise](./images/test-chair.jpg)  
 
-Il faut 'rezise' le linode pour le convertir en Linode 4Gb temporairement : 
+Il faut 'rezise' le linode pour le convertir en Linode 4 GB temporairement, cela va augmenter les ressources du server (CPU & RAM) temporairement, permettant ainsi l'exécution d'analyse d'image. Pour ce faire, il faut d'abord 'Power Off' le serveur :  
+![power-off.png](./images/power-off.png)  
+
+Ensuite, il faut sélectionner l'option 'rezise' et sélectionner l'option '4 GB' :
 ![rezise-section.png](./images/rezise-section.png)  
-
-En s'assurant de sélectionne l'option `Warm resize` :  
 ![linode-4gb.png](./images/linode-4gb.png)  
-![warm-resize.png](./images/warm-resize.png)  
-
-L'option `Warm resize` va augmenter les ressources de votre serveur Linode (CPU et RAM) temporairement. Cela signifie que Linode vas migrer les données en arrière plan avec les resources spécifiées temperairement. Pour revenir au plan initial, vous devez vous reconnecter en SSH et entrer la commande `sudo reboot`, lequel vas redémarrer le VPS à sont plan initial. Ce processus prends un certain temps, environ 5 à 7 minutes.  
-
 
 > **_NOTE:_**  Linode utilise une facturation à l'heure. Si vous augmentez la puissance de votre VPS pour une heure seulement, vous ne paierez le tarif du plan supérieur que pour cette heure précise, donc ce cas-ci, 0.036$ pour l'heure.  !! IL FAUT DONC S'ASSURER DE RESIZE LE SERVER AU PLAN 1GB À LA FIN DE L`ATELIER POUR ÉVITER DES COÛT SUPPLÉMENTAIRE. !!
 
 Attendre que Linode resize le VPS :  
 ![reboot-for-resize.png](./images/reboot-for-resize.png)
 
-Cela indique dans la pannel Linode que le server est offline, c'est normal, c'est celui d'arrière plan qui fonctionne actuellement :  
-![./images/rezising.png](./images/rezising.png)
-
-
 ### Résultat attendue : 
-![./images/success.png](./images/success.png) -->
+Et finalement, rallumer le serveur et envoyer l'image [Image de test, une image de chaise](./images/test-chair.jpg) à partir du site 'http://\<your ip address>'.
+![./images/success.png](./images/success.png)
+
+### Configuration inverse pour retourner au plan 1 GB
+Si vous ne voulez pas simplement drop toute le serveur et devoir recommencer les configuration de bases, il faut, pour rezise au plan 1 GB, 'Power Off' le serveur, aller dans l'option suivante pour 'rezise the server storage' :  
+![rezise-storage-pannel.png](./images/rezise-storage-pannel.png)  
+Entrer la valeur suivante :  
+![amount-rezising-storage.png](./images/amount-rezising-storage.png)  
+Puis rezise le plan du serveur.
