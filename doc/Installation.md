@@ -45,6 +45,7 @@ sudo apt-get install -y dotnet-runtime-9.0
 sudo apt install unzip
 unzip codeproject.ai-server_2.9.5_Ubuntu_x64.zip
 ls
+rm codeproject.ai-server_2.9.5_Ubuntu_x64.zip
 
 sudo dpkg -i codeproject.ai-server_2.9.5_Ubuntu_x64.deb
 sudo apt --fix-broken install -y
@@ -66,7 +67,7 @@ Teste à effectuer dans le serveur, devrait retourner du html :
 ```bash
 curl http://localhost:32168
 ```  
-tester la page sur un navigateur : http://<*votre address ip*>:32168
+tester la page sur un navigateur : http://<*votre adress ip*>:32168
 
 
 
@@ -86,7 +87,7 @@ Création d'une config, s'assurer que le contenu du fichier `codeproject` est co
 ```nginx
 server {
     listen 80;
-    server_name 172.105.26.249;
+    server_name <votre adress ip>;
 
     client_max_body_size 20M;
 
@@ -101,7 +102,7 @@ server {
         auth_basic "Restricted Access to the Cream";
         auth_basic_user_file /etc/nginx/.htpasswd;
 
-        proxy_pass http://<your ip address>:32168/;
+        proxy_pass http://<votre adress ip>:32168/;
 
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -120,8 +121,25 @@ sudo ln -s /etc/nginx/sites-available/codeproject /etc/nginx/sites-enabled/
 sudo systemctl restart nginx
 ```
 
-## Création du site html pour l'analyse d'image  
-Créer le fichier Html suivant sur le serveur, http://<*votre address ip*>  
+## Création du site html pour l'analyse d'image
+Verifier si le dossier www existe : 
+```bash
+cd /var/
+ls
+mkdir www
+```
+
+Créer le fichier Html suivant sur le serveur, http://<*votre adress ip*> :
+```bash
+cd www
+touch index.html
+```
+
+Modifier les permissions : 
+```bash
+sudo chown -R <username>:www-data /var/www/html
+```
+
 `nano /var/www/html/index.html` :  
 ```html
 <html>
@@ -134,7 +152,7 @@ Créer le fichier Html suivant sur le serveur, http://<*votre address ip*>
         var formData = new FormData();
         formData.append('image', fileChooser.files[0]);
 
-        fetch('http://<votre address ip>/codeproject/v1/vision/detection', {
+        fetch('http://<votre adress ip>/codeproject/v1/vision/detection', {
             method: "POST",
             body: formData
         })
@@ -154,13 +172,8 @@ Créer le fichier Html suivant sur le serveur, http://<*votre address ip*>
 </html>
 ```
 
-Puis, modifier les permissions :  
-```bash
-sudo chown -R <username>:www-data /var/www/html
-```
-
 ## Configuration des modules de CodeProject.AI :
-Dans le panel CodeProject.AI `http://<votre address ip>:32168/`, désinstaller tous les modules existantes, excepté `Object Detection (YOLOv5 6.2)` :  
+Dans le panel CodeProject.AI `http://<votre adress ip>:32168/`, désinstaller tous les modules existantes, excepté `Object Detection (YOLOv5 6.2)` :  
 ![images-panel.png](./images/module-pannel.png)  
 S'assurer de garder :   
 ![module-to-keep.png](./images/module-to-keep.png)  

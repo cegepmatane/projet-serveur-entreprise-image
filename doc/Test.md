@@ -18,7 +18,7 @@ Attendre que Linode resize le VPS :
 ![reboot-for-resize.png](./images/reboot-for-resize.png)
 
 ### Résultat attendue : 
-Et finalement, rallumer le serveur et envoyer l'image [Image de test, une image de chaise](./images/test-chair.jpg) à partir du site 'http://\<your ip address>'.
+Et finalement, rallumer le serveur et envoyer l'image [Image de test, une image de chaise](./images/test-chair.jpg) à partir du site 'http://\<your ip adress>'.
 ![./images/success.png](./images/success.png)
 
 ### Configuration inverse pour retourner au plan 1 GB
