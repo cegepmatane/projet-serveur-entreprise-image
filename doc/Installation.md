@@ -122,16 +122,10 @@ sudo systemctl restart nginx
 ```
 
 ## Création du site html pour l'analyse d'image
-Verifier si le dossier www existe : 
-```bash
-cd /var/
-ls
-mkdir www
-```
 
 Créer le fichier Html suivant sur le serveur, http://<*votre adress ip*> :
 ```bash
-cd www
+cd /var/www/
 touch index.html
 ```
 
