@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détection d'image</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js" defer></script>
+</head>
+
+<body>
+
+    <header>
+        <span class="header-dot"></span>
+        <h1>Détection d'image</h1>
+    </header>
+
+    <main>
+        <div class="glass-panel">
+
+            <div class="actions">
+                <label for="photo" class="btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    Prendre une photo
+                </label>
+                <input type="file" id="photo" capture="environment" accept="image/*,video/*" onchange="handleFile(this)" />
+
+                <label for="upload" class="btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Choisir un fichier
+                </label>
+                <input type="file" id="upload" accept="image/*" style="display:none;" onchange="handleFile(this)" />
+            </div>
+
+            <div class="preview-wrap" id="previewWrap">
+                <img id="preview" alt="Aperçu" />
+                <div class="preview-empty" id="previewEmpty">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>Aucune image sélectionnée</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="detectBtn" onclick="detectScene()" style="display:none; width:100%;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Analyser la photo
+            </button>
+
+            <p class="status" id="status"></p>
+
+            <div class="result-card" id="resultCard">
+                <p class="result-label">Objet détecté</p>
+                <p class="result-value" id="resultLabel">—</p>
+                <div class="conf-bar-wrap">
+                    <div class="conf-bar" id="confBar"></div>
+                </div>
+                <p class="confidence" id="resultConf"></p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <h3>Crédit</h3>
+        <div>
+            <a href="https://github.com/codeproject/CodeProject.AI-Server">Github CodeProject.AI</a>
+            <span>Emmanuel PB., Jérôme B., Alexandre L., Cédric S., Victor D.</span>
+        </div>
+    </footer>
+</body>
+
+</html>
