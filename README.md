@@ -5,4 +5,4 @@ Projet de l'équipe composé de Alexandre Langlois, Cédric Simard, Emmanuel Par
 ### Information du projets :  
 - **Catégorie du service** : Reception, traitement et analyse d'image.  
 - **Lien vers la documentation du logiciel choisi** : [Repository Github *CodeProject.AI-Server*](https://github.com/codeproject/CodeProject.AI-Server/tree/main)  
-- **URL du service serveur** : [aiimageproject.online](aiimageproject.online)
+- **URL du service serveur** : ![aiimageproject.online](aiimageproject.online)
