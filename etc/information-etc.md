@@ -1,2 +1,2 @@
-## Information concernant le répertoire `etc`
---TODO-- : TOUS LES FICHIERS DE CONFIG MODIFIER DU SERVEUR, PAR-EXEMPLE LES FICHIERS VHOST, DOIVENT ÊTRE VERSIONNÉ DANS CE RÉPERTOIRE.
+## Information concernant le répertoire `etc`  
+-  Le sous-répertoire `site` contient tous le code pour la création du site [https://aiimageproject.online](https://aiimageproject.online).
