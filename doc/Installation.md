@@ -52,9 +52,10 @@ sudo apt --fix-broken install -y
 
 pushd "/usr/bin/codeproject.ai-server-2.9.5/" && bash setup.sh && popd
 pushd "/usr/bin/codeproject.ai-server-2.9.5/server" && bash ../setup.sh && popd
-```
+```  
 
-
+> [!NOTE]
+> Pour l'utilisation de différent module, voir la documentation de l'APi via la [documentation](https://codeproject.github.io/codeproject.ai/api/api_reference.html)
 
 ## Lancement et test du service  
 - Lancement du service :  
@@ -115,6 +116,7 @@ server {
     }
 }
 ```
+
 
 ```bash
 sudo ln -s /etc/nginx/sites-available/codeproject /etc/nginx/sites-enabled/
