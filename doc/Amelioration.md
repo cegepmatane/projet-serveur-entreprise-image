@@ -24,5 +24,3 @@ Note : Ce serait vrm bien que tu le fasse d'ici le 29 pour la présentation à l
 ### Victor : 
 - [ ] *Dashboard d’utilisation publique façon status page : nombre de requêtes traitées, uptime, modules installés, latence moyenne par module*
 - [ ] *Chaque fois que le Panel CodeProject.Ai Serveur retourne un log d’erreur, créer une alerte simple via message de chat et l’enregistrer dans le fichier du serveur.*
-- [ ] *Rate limiting sur l’API (Apache mod_ratelimit ou Nginx limit_req) par IP et-ou par token pour éviter abus et DDOS sur service IA gourmand en GPU/CPU*  
-Note : Selon Jérome, il parait que c'est déja fait, parlé avec lui pour voir.
