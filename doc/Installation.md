@@ -99,7 +99,7 @@ server {
 
     # 2 - Protected app
     location /codeproject/ {
-        auth_basic "Restricted Access to the Cream";
+        auth_basic "Restricted Access to the Project";
         auth_basic_user_file /etc/nginx/.htpasswd;
 
         proxy_pass http://<votre adress ip>:32168/;
