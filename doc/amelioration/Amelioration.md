@@ -7,8 +7,8 @@ Procédure des étapes et des commandes pour effectuer la partie amélioration d
 - [ ] *Intégrer un module OCR (reconnaissance de texte dans les images) pour ajouter une seconde capacité IA au projet*
 
 ### Jérome : 
-- [ ] *Exportation et mise en ligne du jeu de Chevalier d’Unity dans le sous domaine de notre site web https://jeu.aiimageproject.online*
-- [ ] *Rate limiting sur l’API (Apache mod_ratelimit ou Nginx limit_req) par IP et-ou par token pour éviter abus et DDOS sur service IA gourmand en GPU/CPU*
+- [x] *Exportation et mise en ligne du jeu de Chevalier d’Unity dans le sous domaine de notre site web https://jeu.aiimageproject.online*
+- [x] *Rate limiting sur l’API (Apache mod_ratelimit ou Nginx limit_req) par IP et-ou par token pour éviter abus et DDOS sur service IA gourmand en GPU/CPU*
 
 ### Cédric : 
 - [ ] *Optimisation : Installation et test de différent module de la catégorie ‘Object Detection YOLOv.x’ depuis le panel de CodeProject.AI Serveur, pour utiliser le module le plus adapté à notre projet. ‘Object Detection (YOLOv5 6.2)’ est celui installé et utilisé actuellement, mais les autres n’ont pas été essayé.*
