@@ -285,6 +285,11 @@ main {
     background: var(--surface-hover);
 }
 
+.btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
 .btn-primary {
     background: var(--accent-glow);
     border-color: var(--accent-border);
@@ -348,78 +353,84 @@ main {
 
 
 /* Dropdown Module choice*/
-.dropdown {
+.dropdown-wrapper {
     position: relative;
-    display: inline-block;
+    width: 100%;
 }
 
 .dropdown-trigger {
+    width: 100%;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    cursor: pointer;
+    justify-content: space-between;
 }
 
-.chevron {
-    transition: transform 0.25s ease;
+.dropdown-trigger .chevron {
+    margin-left: auto;
+    transition: transform 0.2s ease;
+}
+
+.dropdown-wrapper:hover .chevron {
+    transform: rotate(180deg);
 }
 
 .dropdown-menu {
     position: absolute;
-    top: calc(100% + 6px);
+    top: 100%;
     left: 0;
-    min-width: 200px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    right: 0;
+    padding-top: 10px;
+    background: transparent;
+    border: none;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-6px);
+    transform: translateY(-4px);
     transition: opacity 0.2s ease, transform 0.2s ease;
     z-index: 100;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown-menu-inner {
+    background: #1e1e1e;
+    backdrop-filter: blur(12px);
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dropdown-wrapper:hover .dropdown-menu {
     opacity: 1;
     pointer-events: all;
     transform: translateY(0);
-}
-
-.dropdown:hover .chevron {
-    transform: rotate(180deg);
 }
 
 .dropdown-item {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    width: 100%;
     padding: 9px 12px;
-    background: transparent;
     border: none;
-    border-radius: 8px;
+    border-radius: 7px;
+    background: none;
     color: inherit;
     font-size: 0.875rem;
-    text-align: left;
     cursor: pointer;
+    text-align: left;
     transition: background 0.15s ease;
+    width: 100%;
 }
 
 .dropdown-item:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: #2a2a2a;
 }
 
-.dropdown-item:active {
-    background: rgba(255, 255, 255, 0.25);
+.dropdown-item.active {
+    background: #333;
+    font-weight: 600;
 }
-
-
 
 /* transition svg en hover */
 #previewWrap:hover .preview-empty svg {
@@ -449,7 +460,7 @@ main {
 }
 
 .result-card {
-    background: rgba(0, 0, 0, 0.2);
+    background: #1a1a1a;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     display: none;

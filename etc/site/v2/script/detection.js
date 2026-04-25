@@ -19,7 +19,7 @@ function setStatus(msg) {
     el.style.display = msg ? 'block' : 'none';
 }
 
-function detectScene() {
+function detectSceneModuleYolov() {
     if (!selectedFile) { setStatus('Please select a file first.'); return; }
 
     setStatus('Detecting…');
@@ -28,7 +28,7 @@ function detectScene() {
     const formData = new FormData();
     formData.append('image', selectedFile);
 
-    fetch('http://192.46.223.66/codeproject/v1/vision/detection', {
+    fetch('http://172.105.24.70/codeproject/v1/vision/detection', {
         method: 'POST',
         body: formData
     })
@@ -52,4 +52,12 @@ function detectScene() {
             document.getElementById('detectBtn').disabled = false;
             setStatus('Error: ' + err.message);
         });
+}
+
+function detectSceneModuleCartoonizer() {
+
+}
+
+function detectSceneModuleSuperResolution() {
+    
 }
