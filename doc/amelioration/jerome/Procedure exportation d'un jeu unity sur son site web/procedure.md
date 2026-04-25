@@ -79,4 +79,4 @@ Une fois la compilation complétée, transférez le répertoire sur votre serveu
 
 
 ## Tester le jeu
-Dans un navigateur internet, entrez dans la barre d'URL <votre ip>/<nom du jeu>
+Dans un navigateur internet, entrez dans la barre d'URL votre ip/nom du jeu
